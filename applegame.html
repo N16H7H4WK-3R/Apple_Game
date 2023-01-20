@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Apple Game</title>
+    <style>
+        body {
+            background-color: #333;
+            color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        #rule {
+            font-size: 19px;
+            text-align: center;
+            margin-top: 50px;
+            color: rgb(242, 237, 237);
+        }
+
+        #apples {
+            font-size: 36px;
+            text-align: center;
+            margin-top: 50px;
+            color: rgb(250, 246, 246);
+        }
+
+        #buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 24px;
+            margin: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #3e8e41;
+        }
+
+        .message {
+            font-size: 24px;
+            text-align: center;
+            margin-top: 20px;
+            color: rgb(249, 243, 243);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="apples">21 Apples</div>
+    <div id="rule">
+        You have a total of 21 apples and you must have to pick apples between 1 to 4 so that the last apple must not be picked by you!<br>
+        One who pick the last apple will be the LOOSER
+    </div>
+    
+    <div id="buttons">
+        <button class="button" onclick="pickApples(1, 'player1')">Player 1: Pick 1</button>
+        <button class="button" onclick="pickApples(2, 'player1')">Player 1: Pick 2</button>
+        <button class="button" onclick="pickApples(3, 'player1')">Player 1: Pick 3</button>
+        <button class="button" onclick="pickApples(4, 'player1')">Player 1: Pick 4</button>
+        <button class="button" onclick="pickApples(1, 'player2')">Player 2: Pick 1</button>
+        <button class="button" onclick="pickApples(2, 'player2')">Player 2: Pick 2</button>
+        <button class="button" onclick="pickApples(3, 'player2')">Player 2: Pick 3</button>
+        <button class="button" onclick="pickApples(4, 'player2')">Player 2: Pick 4</button>
+    </div>
+    <div id="message" class="message"></div>
+
+    <script>
+        //Game logic
+        var apples = 21;
+        var currentPlayer = "player1";
+        var message = document.getElementById("message");
+
+        function pickApples(picked, player) {
+            if (player !== currentPlayer) {
+                message.innerHTML = "It's not your turn, it's " + currentPlayer + "'s turn.";
+                return;
+            }
+            if (picked >= 1 && picked <= 4 && picked <= apples) {
+                apples -= picked;
+                document.getElementById("apples").innerHTML = apples + " Apples";
+                currentPlayer = currentPlayer === "player1" ? "player2" : "player1";
+                if (apples === 1) {
+                    message.innerHTML = "Player " + currentPlayer + " lost! The last apple was picked.";
+                } else {
+                    message.innerHTML = "Player " + player + " picked " + picked + " apples. Now it's " + currentPlayer + "'s turn.";
+                }
+            } else {
+                message.innerHTML = "Invalid input. Please pick a number between 1 and 4 and less than remaining apples.";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
